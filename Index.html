@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="nav">
+            <ul>
+                <li>GPA Calculator for BIT UOM (New Syllabus - 2024) </li>
+                <li>
+                    <button onclick="window.location.href='pomodoro.html';">
+                        Pomodoro Timer
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+
+    <div class="layout">
+        <select id="year">
+            <option value="">Select Year</option> 
+            <option value="1">YEAR 1</option>
+            <option value="2">YEAR 2</option>
+            <option value="3">YEAR 3</option>
+        </select>
+
+        <select id="semester">
+            <option value="">Select Semester</option>
+            <option value="1">SEMESTER 1</option>
+            <option value="2">SEMESTER 2</option>
+        </select>
+        
+        <button onclick="redirectToGPA()">Proceed</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 GPA Calculator</p>
+        <div class="icon">
+            <p>Current viewers: <span id="viewerCount">0</span></p>
+            <a href="https://www.linkedin.com/in/chamathka-nethmini-wije">
+                <img src="linkedin.png" alt="LinkedIn Profile">
+            </a>
+            <a href="https://github.com/chamaneth">
+                <img src="github.png" alt="Github Profile">
+            </a>
+        </div>
+    </footer>
+    
+    
+
+    <script>
+
+        function redirectToGPA() {
+            const year = document.getElementById("year").value;
+            const semester = document.getElementById("semester").value;
+
+            if (year && semester) {
+                window.location.href = `gpa.html?year=${year}&semester=${semester}`;
+            } else {
+                alert("Please select both Year and Semester.");
+            }
+        }
+    </script>
+    
+    
+</body>
+</html>
