@@ -54,19 +54,33 @@
     
     
 
-    <script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-65X1H23PGZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-        function redirectToGPA() {
-            const year = document.getElementById("year").value;
-            const semester = document.getElementById("semester").value;
+  gtag('config', 'G-65X1H23PGZ');
 
-            if (year && semester) {
-                window.location.href = `gpa.html?year=${year}&semester=${semester}`;
-            } else {
-                alert("Please select both Year and Semester.");
-            }
-        }
-    </script>
+  function redirectToGPA() {
+    const year = document.getElementById("year").value;
+    const semester = document.getElementById("semester").value;
+
+    if (year && semester) {
+      // Optional: Track the event when user clicks "Calculate"
+      gtag('event', 'gpa_redirect', {
+        'event_category': 'GPA',
+        'event_label': `Year: ${year}, Semester: ${semester}`
+      });
+
+      window.location.href = `gpa.html?year=${year}&semester=${semester}`;
+    } else {
+      alert("Please select both Year and Semester.");
+    }
+  }
+</script>
+
     
     
 </body>
