@@ -80,8 +80,23 @@
     }
   }
 </script>
+<script>
+      
+      const counterKey = 'gpa-calculator-bit-uom';
 
+      // Fetch and increment visitor count from CountAPI
+      fetch(`https://api.countapi.xyz/hit/${counterKey}/views`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('viewerCount').textContent = data.value;
+        })
+        .catch(err => {
+          console.error('Error fetching visitor count:', err);
+          document.getElementById('viewerCount').textContent = 'N/A';
+        });
+    </script>
     
     
 </body>
 </html>
+
