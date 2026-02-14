@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate GPA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h3>GPA: <span id="gpa">0.00</span></h3>
+<p id="deansList" style="font-weight: bold;"></p>
+
+    <h2 id="title"></h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Credits</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody id="subjectsTable"></tbody>
+    </table>
+    
+    
+    <footer>
+        <p>&copy; 2025 GPA Calculator</p>
+        <div class="icon">
+            <p>Current viewers: <span id="viewerCount">0</span></p>
+            <a href="https://www.linkedin.com/in/chamathka-nethmini-wije">
+                <img src="linkedin.png" alt="LinkedIn Profile">
+            </a>
+            <a href="https://github.com/chamaneth">
+                <img src="github.png" alt="Github Profile">
+            </a>
+        </div>
+    </footer>
+    
+   
+
+
+
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-65X1H23PGZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-65X1H23PGZ');
+
+  // Track page view on gpa.html
+  gtag('event', 'page_view', {
+    page_title: 'GPA Page',
+    page_path: location.pathname + location.search
+  });
+
+  // Fetch visitor count from CountAPI and update page
+  function updateViewerCount() {
+    fetch('https://api.countapi.xyz/hit/chamaneth/gpa-visitor')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('viewerCount').innerText = data.value;
+      })
+      .catch(err => console.error('CountAPI error:', err));
+  }
+
+  // Call viewer count update when page loads
+  window.onload = () => {
+    updateViewerCount();
+    populateTable();
+  };
+
+  // Parse URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  const year = urlParams.get("year");
+  const semester = urlParams.get("semester");
+
+  const courses = {
+    "1": {
+      "1": [
+        { code: "ITE 1913", name: "Communication Skills Development", credits: 2 },
+        { code: "ITE 1213", name: "Computer Systems", credits: 2 },
+        { code: "ITE 1813", name: "Mathematics & Statistics for IT", credits: 2 },
+        { code: "ITE 1713", name: "Web Design", credits: 3 },
+        { code: "ITE 1123", name: "Fundamentals of Programming", credits: 3 },
+        { code: "ITE 1923", name: "ICT Skills and Applications", credits: 3 }
+      ],
+      "2": [
+        { code: "ITE 1413", name: "Fundamentals of Databases", credits: 2 },
+        { code: "ITE 1933", name: "Technical Writing", credits: 2 },
+        { code: "ITE 1133", name: "Visual Applications", credits: 3 },
+        { code: "ITE 1723", name: "Web Programming", credits: 3 },
+        { code: "ITE 1223", name: "System & Design Paradigms", credits: 3 },
+        { code: "ITE 1943", name: "ICT Project", credits: 2 }
+      ]
+    },
+    "2": {
+      "1": [
+        { code: "ITE 2133", name: "Object Oriented Programming", credits: 3 },
+        { code: "ITE 2143", name: "Data Structures and Algorithms", credits: 2 },
+        { code: "ITE 2233", name: "Operating Systems", credits: 2 },
+        { code: "ITE 2823", name: "Calculus & Statistical Distributions", credits: 2 },
+        { code: "ITE 2163", name: "Software Engineering", credits: 3 },
+        { code: "ITE 2153", name: "Object Oriented Analysis Design", credits: 3 }
+      ],
+      "2": [
+        { code: "ITE 2423", name: "Database Management Systems", credits: 3 },
+        { code: "ITE 2433", name: "Data Communication & Networking", credits: 2 },
+        { code: "ITE 2173", name: "UI/UX Design", credits: 2 },
+        { code: "ITE 2313", name: "IT Quality Assurance", credits: 3 },
+        { code: "ITE 2613", name: "IT Project Management", credits: 2 },
+        { code: "ITE 2953", name: "Programming Group Project", credits: 4 }
+      ]
+    },
+    "3": [
+      { code: "ITE 3113", name: "Discrete Mathematics", credits: 2 },
+      { code: "ITE 3123", name: "Professional Practice", credits: 2 },
+      { code: "ITE 3143", name: "Information Security", credits: 2 },
+      { code: "ITE 3153", name: "Essentials of AI", credits: 2 },
+      { code: "ITE 3963", name: "Project", credits: 10 },
+      { code: "ITE 3213", name: "Software Engineering in Practice", credits: 3 },
+      { code: "ITE 3223", name: "Secure Software Development", credits: 3 },
+      { code: "ITE 3233", name: "Quality Assurance in Practice", credits: 3 },
+      { code: "ITE 3253", name: "Mobile Application Development", credits: 3 },
+      { code: "ITE 3273", name: "Enterprise Application Development", credits: 3 },
+      { code: "ITE 3313", name: "Data Visualization", credits: 3 },
+      { code: "ITE 3323", name: "Data Infrastructure and Automation", credits: 3 },
+      { code: "ITE 3333", name: "Business Statistics", credits: 3 },
+      { code: "ITE 3343", name: "Data Mining", credits: 3 },
+      { code: "ITE 3363", name: "Business Analytics", credits: 3 },
+      { code: "ITE 3413", name: "Internet/Web Security", credits: 3 },
+      { code: "ITE 3423", name: "Cloud Based Application Development", credits: 3 },
+      { code: "ITE 3433", name: "Web Services", credits: 3 },
+      { code: "ITE 3513", name: "Artificial Neural Networks", credits: 3 },
+      { code: "ITE 3523", name: "Big Data Analytics", credits: 3 },
+      { code: "ITE 3533", name: "Machine Learning", credits: 3 },
+      { code: "ITE 3543", name: "Natural Language Processing", credits: 3 },
+      { code: "ITE 3613", name: "UX Engineering", credits: 3 },
+      { code: "ITE 3623", name: "Interaction Design", credits: 3 },
+      { code: "ITE 3633", name: "Graphic Application Development", credits: 3 },
+      { code: "ITE 3653", name: "Human Computer Interaction", credits: 3 },
+      { code: "ITE 3713", name: "Wireless Communications", credits: 3 },
+      { code: "ITE 3723", name: "Cyber Security", credits: 3 },
+      { code: "ITE 3733", name: "Internet of Things", credits: 3 },
+      { code: "ITE 3743", name: "Network Programming", credits: 3 },
+      { code: "ITE 3753", name: "Cloud Computing", credits: 3 }
+    ]
+  };
+
+  const subjectsTable = document.getElementById("subjectsTable");
+
+  function populateTable() {
+    subjectsTable.innerHTML = "";
+
+    if (year === "3") {
+      document.getElementById("title").textContent = `Year ${year}`;
+
+      courses["3"].forEach(subject => {
+        subjectsTable.innerHTML += createTableRow(subject);
+      });
+
+    } else if (courses[year] && courses[year][semester]) {
+      document.getElementById("title").textContent = `Year ${year} - Semester ${semester}`;
+
+      courses[year][semester].forEach(subject => {
+        subjectsTable.innerHTML += createTableRow(subject);
+      });
+    }
+
+    document.querySelectorAll(".grade").forEach(select => {
+      select.addEventListener("change", calculateGPA);
+    });
+  }
+
+  function createTableRow(subject) {
+    return `<tr>
+      <td>${subject.code}</td>
+      <td>${subject.name}</td>
+      <td>${subject.credits}</td>
+      <td>
+        <select class="grade" data-credits="${subject.credits}">
+          <option value=""> Grade </option>
+          <option value="4.0">A+</option>
+          <option value="4.0">A</option>
+          <option value="3.7">A-</option>
+          <option value="3.3">B+</option>
+          <option value="3.0">B</option>
+          <option value="2.7">B-</option>
+          <option value="2.3">C+</option>
+          <option value="2.0">C</option>
+          <option value="1.7">C-</option>
+          <option value="1.3">D+</option>
+          <option value="1.0">D</option>
+          <option value="0.0">F</option>
+          <option value="0"> I </option>
+        </select>
+      </td>
+    </tr>`;
+  }
+
+  function calculateGPA() {
+    let totalCredits = 0;
+    let totalGradePoints = 0;
+
+    document.querySelectorAll(".grade").forEach(select => {
+      const grade = parseFloat(select.value);
+      const credits = parseInt(select.getAttribute("data-credits"));
+
+      if (!isNaN(grade) && !isNaN(credits)) {
+        totalGradePoints += grade * credits;
+        totalCredits += credits;
+      }
+    });
+
+    const gpa = totalCredits ? (totalGradePoints / totalCredits).toFixed(2) : "0.00";
+    document.getElementById("gpa").textContent = gpa;
+
+    const deansListMessage = document.getElementById("deansList");
+
+    if (parseFloat(gpa) > 3.80) {
+      deansListMessage.textContent = "Congratulations! You are on the Dean's List.";
+      deansListMessage.style.color = "Brown";
+      deansListMessage.style.textAlign = "center";
+    } else {
+      deansListMessage.textContent = "";
+    }
+  }
+</script>
+
+    </div>
+</body>
+</html>
+
