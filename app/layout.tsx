@@ -16,9 +16,42 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://uom-bit-gpa-y.vercel.app';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "UOM BIT GPA Calculator",
   description: "Calculate your GPA for University of Moratuwa BIT program",
+  keywords: ["UOM", "BIT", "GPA Calculator", "University of Moratuwa", "GPA", "CGPA"],
+  authors: [{ name: "UOM BIT Team" }],
+  openGraph: {
+    title: "UOM BIT GPA Calculator",
+    description: "Calculate your GPA for University of Moratuwa BIT program",
+    url: siteUrl,
+    siteName: "UOM BIT GPA Calculator",
+    type: "website",
+    images: [
+      {
+        url: `${siteUrl}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "UOM BIT GPA Calculator",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UOM BIT GPA Calculator",
+    description: "Calculate your GPA for University of Moratuwa BIT program",
+    images: [`${siteUrl}/og-image.png`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
 };
 
 export default function RootLayout({
