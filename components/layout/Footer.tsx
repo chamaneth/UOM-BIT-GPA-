@@ -10,7 +10,7 @@ import {
 
 export function Footer() {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState('version 1.1');
+  const [selected, setSelected] = useState('version 2');
   // const [viewerCount, setViewerCount] = useState<string | number>('0');
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -153,12 +153,12 @@ export function Footer() {
                         className="block px-4 py-2 text-sm hover:bg-muted/20"
                         onClick={(e) => {
                           e.preventDefault();
-                          // stay on current site; select version 1.1
-                          setSelected('version 1.1');
+                          // stay on current site; select version 2
+                          setSelected('version 2');
                           setOpen(false);
                         }}
                       >
-                        version 1.1
+                        version 2
                       </Link>
                     </li>
                   </ul>
