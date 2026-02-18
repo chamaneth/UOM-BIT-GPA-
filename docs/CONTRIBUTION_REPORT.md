@@ -384,26 +384,6 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
    });
    ```
 
-### URL Configuration Summary
-
-All URLs have been standardized to use the production domain: **`https://uom-bit-gpa.vercel.app`**
-
-| File | URL Type | Updated URL | Purpose |
-|------|----------|-------------|---------|
-| `index.html` | Canonical | `https://uom-bit-gpa.vercel.app` | SEO & redirect page |
-| `index.html` | JavaScript redirect | `https://uom-bit-gpa.vercel.app` | Auto-redirect after 5s |
-| `index.html` | Noscript fallback | `https://uom-bit-gpa.vercel.app` | Fallback for non-JS users |
-| `app/layout.tsx` | metadataBase | `process.env.NEXT_PUBLIC_SITE_URL` | SEO metadata base |
-| `app/layout.tsx` | Open Graph | `${siteUrl}/og-image.png` | Social media previews |
-| `app/layout.tsx` | Canonical | Dynamic from env var | SEO canonical URL |
-
-**Note:** The `app/layout.tsx` uses environment variables for flexibility:
-- **Production:** Set `NEXT_PUBLIC_SITE_URL=https://uom-bit-gpa.vercel.app` in Vercel
-- **Development:** Set `NEXT_PUBLIC_SITE_URL=http://localhost:3000` in `.env.local`
-- **Fallback:** Defaults to `https://uom-bit-gpa.vercel.app` if not set
-
----
-
 ## ✅ Migration Verification
 
 ### Pre-Deployment Checklist
