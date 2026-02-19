@@ -1,102 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPA Calculator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav class="nav">
-            <ul>
-                <li>GPA Calculator for BIT UOM (New Syllabus - 2024) </li>
-                <li>
-                    <button onclick="window.location.href='pomodoro.html';">
-                        Pomodoro Timer
-                    </button>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UOM-BIT GPA — We've moved</title>
+    <link rel="canonical" href="https://uom-bit-gpa-y.vercel.app" />
+    <style>
+      :root{
+        --bg:#0f172a;
+        --muted:#9aa4bf;
+        --accent:linear-gradient(90deg,#7c3aed,#06b6d4);
+        --glass: rgba(255,255,255,0.03);
+      }
+      html,body{height:100%;}
+      body{
+        margin:0;
+        font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+        background:radial-gradient(600px 400px at 10% 10%, rgba(99,102,241,0.08), transparent),
+                   radial-gradient(500px 300px at 90% 90%, rgba(6,182,212,0.06), transparent),
+                   var(--bg);
+        color:#e6eef8;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:24px;
+      }
+      .card{
+        width:100%;
+        max-width:720px;
+        background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border:1px solid rgba(255,255,255,0.04);
+        border-radius:12px;
+        box-shadow:0 8px 30px rgba(2,6,23,0.6);
+        padding:40px;
+        text-align:center;
+      }
+      .logo{font-size:40px;margin-bottom:8px}
+      h1{margin:6px 0 12px;font-weight:600;font-size:24px}
+      p{margin:0;color:var(--muted)}
+      .count{font-weight:700;color:#fff}
+      .actions{display:flex;gap:12px;justify-content:center;margin-top:20px}
+      .btn{display:inline-block;padding:10px 16px;border-radius:8px;border:1px solid transparent;background:transparent;color:inherit;text-decoration:none;cursor:pointer;font-weight:600}
+      .btn.primary{background:var(--accent);color:#061826;border:0}
+      .btn.ghost{background:var(--glass);border:1px solid rgba(255,255,255,0.04)}
+      .muted{margin-top:18px;color:var(--muted);font-size:13px}
+      a{color:#c7d2fe;text-decoration:underline}
+      @media (max-width:420px){.card{padding:22px}}
+    </style>
+  </head>
+  <body>
+    <main class="card" role="main" aria-labelledby="title">
+      <div class="logo" aria-hidden="true">📚</div>
+      <h1 id="title">We've moved — UOM-BIT GPA</h1>
+      <p>
+        Welcome! The GPA app now lives on a new site. You'll be redirected in
+        <strong class="count" id="count">5</strong> seconds.
+      </p>
+      <div class="actions" role="group" aria-label="Redirect actions">
+        <a id="visit" class="btn primary" href="https://uom-bit-gpa-y.vercel.app/">Go now</a>
+        <button id="stay" class="btn ghost">Stay on this page</button>
+      </div>
+      <p class="muted" id="status">If the redirect doesn't start, <a href="https://uom-bit-gpa-y.vercel.app/">click here</a>.</p>
+    </main>
 
-    <div class="layout">
-        <select id="year">
-            <option value="">Select Year</option> 
-            <option value="1">YEAR 1</option>
-            <option value="2">YEAR 2</option>
-            <option value="3">YEAR 3</option>
-        </select>
+    <script>
+      const TARGET = 'https://uom-bit-gpa-y.vercel.app';
+      const START_SECONDS = 5;
 
-        <select id="semester">
-            <option value="">Select Semester</option>
-            <option value="1">SEMESTER 1</option>
-            <option value="2">SEMESTER 2</option>
-        </select>
-        
-        <button onclick="redirectToGPA()">Proceed</button>
-         <button onclick="window.location.href='grading.html'">Go to Grading Page</button>
-    </div>
+      (function(){
+        let seconds = START_SECONDS;
+        const countEl = document.getElementById('count');
+        const statusEl = document.getElementById('status');
+        const visitLink = document.getElementById('visit');
+        const stayBtn = document.getElementById('stay');
+        let cancelled = false;
 
-    <footer>
-        <p>&copy; 2025 GPA Calculator</p>
-        <div class="icon">
-            <p>Current viewers: <span id="viewerCount">0</span></p>
-            <a href="https://www.linkedin.com/in/chamathka-nethmini-wije">
-                <img src="linkedin.png" alt="LinkedIn Profile">
-            </a>
-            <a href="https://github.com/chamaneth">
-                <img src="github.png" alt="Github Profile">
-            </a>
-        </div>
-    </footer>
-    
-    
+        // Optional: fire analytics event here before redirecting
+        function sendAnalytics(){
+          // Example: if using gtag, call gtag('event', 'redirect', {destination: TARGET})
+        }
 
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-65X1H23PGZ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        const tick = ()=>{
+          seconds -= 1;
+          countEl.textContent = seconds;
+          if(seconds <= 0){
+            clearInterval(timer);
+            if(!cancelled){
+              sendAnalytics();
+              window.location.href = TARGET;
+            }
+          }
+        };
 
-  gtag('config', 'G-65X1H23PGZ');
+        const timer = setInterval(tick, 1000);
 
-  function redirectToGPA() {
-    const year = document.getElementById("year").value;
-    const semester = document.getElementById("semester").value;
+        // If user clicks 'Go now' we mark cancelled=false so redirect proceeds immediately
+        visitLink.addEventListener('click', function(){ cancelled = false; });
 
-    if (year && semester) {
-      // Optional: Track the event when user clicks "Calculate"
-      gtag('event', 'gpa_redirect', {
-        'event_category': 'GPA',
-        'event_label': `Year: ${year}, Semester: ${semester}`
-      });
-
-      window.location.href = `gpa.html?year=${year}&semester=${semester}`;
-    } else {
-      alert("Please select both Year and Semester.");
-    }
-  }
-</script>
-<script>
-      
-      const counterKey = 'gpa-calculator-bit-uom';
-
-      // Fetch and increment visitor count from CountAPI
-      fetch(`https://api.countapi.xyz/hit/${counterKey}/views`)
-        .then(response => response.json())
-        .then(data => {
-          document.getElementById('viewerCount').textContent = data.value;
-        })
-        .catch(err => {
-          console.error('Error fetching visitor count:', err);
-          document.getElementById('viewerCount').textContent = 'N/A';
+        // 'Stay' cancels the redirect
+        stayBtn.addEventListener('click', function(){
+          cancelled = true;
+          clearInterval(timer);
+          statusEl.textContent = 'Redirect cancelled. You can still visit the new site any time.';
         });
+
+        // Accessibility: allow keyboard users to cancel with Escape
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ cancelled = true; clearInterval(timer); statusEl.textContent = 'Redirect cancelled.'; }});
+      })();
     </script>
-    
-    
+
+    <!-- Non-JS fallback: will redirect after 5 seconds for users without JS -->
+    <noscript>
+      <meta http-equiv="refresh" content="5; url=https://uom-bit-gpa-y.vercel.app" />
+      <style>body{background:#fff;color:#000}main{display:block;padding:20px;margin:40px auto;max-width:600px}</style>
+      <main>
+        <h1>We've moved</h1>
+        <p>Redirecting to the new site. If you are not redirected, <a href="https://uom-bit-gpa-y.vercel.app">click here</a>.</p>
+      </main>
+    </noscript>
 </body>
 </html>
-
